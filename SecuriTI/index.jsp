@@ -16,10 +16,10 @@
 <body>
 	<div>
 		<div  id="ocultar" class="container-sm" style="width: 40%;">
-			<form method="post" action="/Java/Process/login.jsp" style="margin: 25px ;" id="login">
+			<form method="post" action="dashboard/Controller/Process/login.jsp" style="margin: 25px ;" id="login">
 				<div class="mb-3">
 					<div class="grid text-center">
-						<div class="img-fluid"><a href="index.jsp"><img src="Fichero/IMG/securiTI.png"></a></div>
+						<div class="img-fluid"><a href="index.jsp"><img src="resources/IMG/securiTI.png"></a></div>
 						<h1>Iniciar Sesión</h1>
 					</div>
 				</div>
