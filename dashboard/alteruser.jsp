@@ -107,7 +107,7 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre Nuevo</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input required type="text" class="form-control" id="name" name="name">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -135,7 +135,7 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="" class="form-label">Username Nuevo</label>
-                                <input type="text" class="form-control" id="username" name="username">
+                                <input required type="text" class="form-control" id="username" name="username">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -164,7 +164,7 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="" class="form-label">Correo Nuevo</label>
-                                <input type="text" class="form-control" id="email" name="email">
+                                <input required type="email" class="form-control" id="email" name="email">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -192,11 +192,11 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="" class="form-label">Contraseña Nueva</label>
-                                <input type="text" class="form-control" id="newpassword" name="newpassword">
+                                <input required type="password" class="form-control" id="newpassword" name="newpassword">
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Repita Contraseña</label>
-                                <input type="text" class="form-control" id="newpassword2" name="newpassword2">
+                                <input required type="password" class="form-control" id="newpassword2" name="newpassword2">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Enviar</button>

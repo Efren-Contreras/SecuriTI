@@ -74,9 +74,8 @@
 												<div class="card-body">
 													<button formaction="dashboard/alteruser.jsp" type="submit"
 														class="btn btn-info">Editar</button>
-													<button formaction="dashboard/Controller/Process/deleteuser.jsp"
-														type="submit" class="btn btn-danger">Eliminar</button>
-												</div>
+														<button formaction="dashboard/Controller/Process/deleteuser.jsp" type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#eliminar">Eliminar</button>
+												</div><!--Aqui we :v-->
 											</div>
 										</form>
 									</div>
@@ -129,10 +128,6 @@
 											</button>
 									</p>
 									<p class="h1">Username: <%=username%>
-											<button type="button" class="h4 btn btn-info" data-bs-toggle="modal"
-												data-bs-target="#formularioModal1">
-												Editar
-											</button>
 									</p>
 									<p class="h1">Email: <%=email%>
 											<button type="button" class="h4 btn btn-info" data-bs-toggle="modal"
@@ -166,31 +161,6 @@
 											<div class="mb-3">
 												<label for="nombre" class="form-label">Nombre</label>
 												<input type="text" class="form-control" id="name" name="name" required>
-											</div>
-											<div class="modal-footer">
-												<button type="submit" class="btn btn-primary">Enviar</button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal fade" id="formularioModal1" tabindex="-1" aria-labelledby="exampleModalLabel1"
-							aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="btn-close" data-bs-dismiss="modal"
-											aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-										<!-- Formularios -->
-										<form action="dashboard/Controller/Process/editprofile.jsp?formtype=username"
-											method="post">
-											<div class="mb-3">
-												<label for="username" class="form-label">Username</label>
-												<input type="username" class="form-control" id="username"
-													name="username" required>
 											</div>
 											<div class="modal-footer">
 												<button type="submit" class="btn btn-primary">Enviar</button>
@@ -308,6 +278,22 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content" style="border: black 2px solid; border-radius: 20px;">
+				<div style="text-align: center;">
+				  <h2>Alerta</h2>
+				</div>
+				<div style="display: flex; margin-bottom: 2%; margin-right: 1%;">
+				  <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">cerrar</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+
 		<script type="text/javascript">
 			document.getElementById("FormVer").style.display = 'none';
 			document.getElementById("usua").style.display = 'none';
