@@ -15,10 +15,10 @@
             Statement st = null;
             st = conn.createStatement();
             int i = st.executeUpdate(query);
-            response.sendRedirect("../../dashboard.jsp?idpage=cuentas#success");
+            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#success");
         } catch (Exception e){
-            out.print(e);
-            out.print("<br>"+query);
+            out.print(e.getMessage());
+            out.print("<br>Consulta: "+query);
         }
     }
     else {

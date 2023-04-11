@@ -1,0 +1,13 @@
+CREATE TABLE `usuarios` (
+  `idUser` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `password` blob NOT NULL,
+  `userlevel` text NOT NULL
+)
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`idUser`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+ALTER TABLE `usuarios` CHANGE `idUser` `idUser` INT(11) NOT NULL AUTO_INCREMENT;
