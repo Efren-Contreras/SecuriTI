@@ -49,7 +49,7 @@
             </div>
             <div class="mb-3">
                 <label for="correo" class="form-label">Username</label>
-                <div style="display: flex;">
+                <div style="display: flex; width: 88%;">
                     <input disabled type="username" class="form-control" id="username" 
                         style="height: 2.0%;" value="<%=rs.getString("username")%>">
                 </div>
@@ -196,10 +196,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Repita Contraseña</label>
-                                <input required type="password" class="form-control" id="newpassword2" name="newpassword2">
+                                <input required type="password" class="form-control" id="newpassword2" name="newpassword2" onkeyup="inab()">
+                            </div>
+                            <div class="alert alert-danger" role="alert" id="alertano">
+                                Las contraseñas no coinciden
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                <button type="submit" class="btn btn-primary" onclick="igualdad()" id="desb">Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -250,6 +253,42 @@
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
 		crossorigin="anonymous"></script>
 </body>
+
+<script type="text/javascript">
+
+document.getElementById("alertano").style.display = 'none';
+
+
+function igualdad() {
+
+    var contra1 = document.getElementById("newpassword").value;
+    var contr2 = document.getElementById("newpassword2").value;
+
+
+   if (contra1 != contr2) {
+    window.alert("Las contraseñas no coinciden");
+   } else{
+   window.alert("Cambio Exitoso");
+   }
+
+}
+
+function inab() {
+    var contra1 = document.getElementById("newpassword").value;
+    var contr2 = document.getElementById("newpassword2").value;
+    var desb = document.getElementById("desb");
+
+    if (contra1 != contr2) {
+    desb.disabled = true;
+    
+    document.getElementById("alertano").style.display = 'block';
+   } else{
+    desb.disabled = false;
+   }
+
+}
+
+</script>
 
 </html>
 
