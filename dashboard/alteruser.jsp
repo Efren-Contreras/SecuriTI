@@ -26,23 +26,20 @@
             <div class="card-title mx-auto">
                 <h3>Editar información del usuario</h3>
             </div>
-           
             <%
-                String sql = "SELECT * FROM usuarios WHERE idUser="+idusuario;
+                String sql = "SELECT * FROM users WHERE idUser="+idusuario;
                 try {
                     PreparedStatement st = null;
                     ResultSet rs = null;
                     st = conn.prepareStatement(sql);
                     rs = st.executeQuery();
                     while (rs.next()) {
-            %>  
-        
-
+            %>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <div style="display: flex;">
                     <input disabled type="text" class="form-control" id="nombre" 
-                    style="height: 2.0%;" value="<%=rs.getString("name")%>">
+                    style="height: 2.0%;" value='<%=rs.getString("name")%>'>
                     <button type="button" style="margin-left: 2%;" class="h4 btn btn-info" data-bs-toggle="modal"
                         data-bs-target="#modalname">Editar</button>
                 </div>
@@ -51,14 +48,14 @@
                 <label for="correo" class="form-label">Username</label>
                 <div style="display: flex; width: 88%;">
                     <input disabled type="username" class="form-control" id="username" 
-                        style="height: 2.0%;" value="<%=rs.getString("username")%>">
+                        style="height: 2.0%;" value='<%=rs.getString("username")%>'>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="mensaje" class="form-label">Correo</label>
                 <div style="display: flex;">
                     <input disabled type="email" class="form-control" id="correo" 
-                    style="height: 2.0%;" value="<%=rs.getString("email")%>">
+                    style="height: 2.0%;" value='<%=rs.getString("email")%>'>
                     <button type="button" style="margin-left: 2%;" class="h4 btn btn-info" data-bs-toggle="modal"
                         data-bs-target="#modalcorreo">Editar</button>
                 </div>
@@ -81,8 +78,9 @@
                         data-bs-target="#modalacceso">Editar</button>
                 </div>
             </div>
-
-            
+            <div class="mb-3">
+                <a href="../../../dashboard.jsp?idpage=cuentas" class="btn btn-secondary">Volver</a>
+            </div>
             <%
                     }
                 } catch (Exception e) {
@@ -164,10 +162,10 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="" class="form-label">Correo Nuevo</label>
-                                <input required type="email" class="form-control" id="email" name="email">
+                                <input required type="email" class="form-control" id="inputEmail" name="email">
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                <button type="submit" class="btn btn-primary" id="btnEnviar">Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -200,6 +198,9 @@
                             </div>
                             <div class="alert alert-danger" role="alert" id="alertano">
                                 Las contraseñas no coinciden
+                            </div>
+                            <div class="alert alert-success" role="alert" id="alertasi">
+                                Las contraseñas coinciden
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary" onclick="igualdad()" id="desb">Enviar</button>
@@ -254,10 +255,22 @@
 		crossorigin="anonymous"></script>
 </body>
 
-<script type="text/javascript">
 
+<script>
+
+document.getElementById('inputEmail').addEventListener('input', validarEmail);
 document.getElementById("alertano").style.display = 'none';
+document.getElementById("alertasi").style.display = 'none';
 
+function validarEmail() {
+    var inputEmail = document.getElementById('inputEmail');
+    const btnEditar = document.getElementById('btnEnviar');
+    if (inputEmail.checkValidity()) {
+        btnEnviar.removeAttribute('disabled'); // Habilita el botón de envío
+    } else {
+        btnEnviar.setAttribute('disabled', 'disabled'); // Deshabilita el botón de envío
+    }
+}
 
 function igualdad() {
 
@@ -280,10 +293,17 @@ function inab() {
 
     if (contra1 != contr2) {
     desb.disabled = true;
-    
     document.getElementById("alertano").style.display = 'block';
+    document.getElementById("alertasi").style.display = 'none';
    } else{
     desb.disabled = false;
+    document.getElementById("alertano").style.display = 'none';
+    document.getElementById("alertasi").style.display = 'block';
+   }
+
+   if(contra1 && contr2 ==''){
+    document.getElementById("alertano").style.display = 'none';
+    document.getElementById("alertasi").style.display = 'none';
    }
 
 }

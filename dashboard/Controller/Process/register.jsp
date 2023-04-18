@@ -6,10 +6,10 @@
     String name = request.getParameter("name");
     String email = request.getParameter("email");
     String password = request.getParameter("password");
-    String query = "INSERT INTO usuarios (name, username, email, password, userlevel) "+
+    String query = "INSERT INTO users (name, username, email, password, userlevel) "+
     "VALUES ('"+name+"','"+username+"', '"+email+"', aes_encrypt('"+password+"', 'securiti'), 'default')";
     //Validación y redireccionamiento
-    if (username!="null" && name!="null" && email!="null" && password!="null"){
+    if (username!=null && name!=null && email!=null && password!=null){
         //MySQL
         try {
             Statement st = null;

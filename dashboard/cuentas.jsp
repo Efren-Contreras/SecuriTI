@@ -1,50 +1,57 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="Controller/Connections/mysql.jsp" %>
+<body>
+	
+
 <div class="container-fluid">
 	<div class="row flex-nowrap">
 		<!-- Panel Izquierdo -->
 		<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-			<div
-				class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-				<a href="#"
-					class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+			<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+				<a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 					<span class="fs-5 d-none d-sm-inline">Menu</span>
 				</a>
-				<ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-					id="menu">
+				<ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
 					<li>
-						<a href="#collapseExample" data-bs-toggle="collapse" class="nav-link px-0 align-middle"
-							role="button" aria-expanded="false" aria-controls="collapseExample"
-							onclick="verCuenta()">
-							<i class="bi bi-person-circle"></i>
+						<a href="#profile" class="nav-link px-0 align-middle" role="button"
+							aria-expanded="false" aria-controls="collapseExample" onclick="verCuenta()">
+							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+								class="bi bi-person-circle" viewBox="0 0 16 16">
+								<path
+									d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+								<path fill-rule="evenodd"
+									d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+							</svg>
 							<span class="ms-1 d-none d-sm-inline">Perfil</span>
 						</a>
 					</li>
 					<% if (userlevel.equals("root") || userlevel.equals("admin") ){ %>
 						<li>
-							<a href="#" class="nav-link px-0 align-middle" onclick="verUsuario();">
-								<i class="fs-4 bi-table"></i> <span
-									class="ms-1 d-none d-sm-inline">Usuarios</span></a>
+							<a href="#usuarios" class="nav-link px-0 align-middle" onclick="verUsuario();">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+									<path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+								</svg><span class="ms-1 d-none d-sm-inline">Usuarios</span></a>
 						</li>
 						<li>
-							<a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle"
-								onclick="VerForm();">
-								<i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Crear
-									Cuenta</span></a>
+							<a href="#registrar" class="nav-link px-0 align-middle" onclick="VerForm();">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+									<path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+									<path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+								</svg><span class="ms-1 d-none d-sm-inline">Crear Cuenta</span></a>
 						</li>
-						<% } %>
+					<% } %>					
 				</ul>
 			</div>
 		</div>
 
 		<div class="col py-3">
 			<!-- Ver usuarios -->
-			<div id="usua">
+			<div id="usuarios">
 				<div class="container-fluid">
-					<h1>Lista de los usuarios</h1>
+					<h1>Lista de Usuarios</h1>
 					<div class="card-group">
 						<% 
-						String sql = "SELECT * FROM usuarios WHERE idUser !=" +idUser; 
+						String sql = "SELECT * FROM users WHERE username !='ROOT'"; 
 						try { 
 							PreparedStatement st=null; 
 							ResultSet rs = null; 
@@ -54,20 +61,17 @@
 							while (rs.next()) {
 								counter++;
 						%>
-							<div class="p-1">
+							<div class="p-1" style="width: 32%;">
 								<form method="post">
 									<div class="card w-90">
 										<div class="card-body">
-											<h5 class="card-title">Empleado</h5>
+											<h5 class="card-title"><%=rs.getString("username")%></h5>
 											<p class="card-text">
 												<input name="iduser" type="hidden" value="<%=rs.getString("idUser")%>">
 											</p>
 										</div>
 										<ul class="list-group list-group-flush">
 											<li class="list-group-item">Nombre: <%=rs.getString("name")%>
-											</li>
-											<li class="list-group-item">Nombre de Usuario:
-												<%=rs.getString("username")%>
 											</li>
 											<li class="list-group-item">Contacto: <%=rs.getString("email")%>
 											</li>
@@ -137,35 +141,40 @@
 
 			<!-- Ver Perfil -->
 			<div id="CuentaVer" class="card mb-3">
-				<div class="row g-0">
-					<div class="col-md-4">
-						<img class="img-fluid rounded-start" src="resources/IMG/user2.png" alt="Usuario">
-					</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h1 class="card-title">Tú Perfil</h1>
-							<p class="h1">Nombre: <%=name%>
-									<button type="button" class="h4 btn btn-info" data-bs-toggle="modal"
-										data-bs-target="#formularioModal0">
+				<div class="table-responsive">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th scope="row">Nombre:</th>
+								<td><%=name%></td>
+								<td>
+									<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#formularioModal0">
 										Editar
 									</button>
-							</p>
-							<p class="h1">Username: <%=username%>
-							</p>
-							<p class="h1">Email: <%=email%>
-									<button type="button" class="h4 btn btn-info" data-bs-toggle="modal"
-										data-bs-target="#formularioModal2">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">Username:</th>
+								<td><%=username%></td>
+								<td></td>
+							</tr>
+							<tr>
+								<th scope="row">Email:</th>
+								<td><%=email%></td>
+								<td>
+									<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#formularioModal2">
 										Editar
 									</button>
-							</p>
-							<button type="button" class="h4 btn btn-info" data-bs-toggle="modal"
-								data-bs-target="#contraseña">
-								Cambiar Contraseña
-							</button>
-						</div>
-					</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
+				<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#contraseña">
+					Cambiar Contraseña
+				</button>
 			</div>
+			
 
 			<!-- Form Para editar info de la cuenta-->
 			<div class="container-fluid">
@@ -236,8 +245,9 @@
 									method="post">
 									<div class="mb-3">
 										<label for="passwordold" class="form-label">Contraseña actual</label>
-										<input type="password" class="form-control" id="nombre"
+										<input type="password" class="form-control" id="inputContrasenaold"
 											name="oldpassword" required>
+										<p id="mensajeErrorPass" style="color: red;"></p>
 									</div>
 									<div class="mb-3">
 										<label for="passwordn" class="form-label">Contraseña Nueva</label>
@@ -250,8 +260,14 @@
 										<input type="password" class="form-control" id="newpass2"
 											name="newpassword2" onkeyup="inab()" required>
 									</div>
+									<div class="alert alert-danger" role="alert" id="alertano">
+										Las contraseñas no coinciden
+									</div>
+									<div class="alert alert-success" role="alert" id="alertasi">
+										Las contraseñas coinciden
+									</div>
 									<div class="modal-footer">
-										<button type="submit" class="btn btn-primary">Enviar</button>
+										<button id="editpassword" type="submit" class="btn btn-primary" onclick="igualdad()">Enviar</button>
 									</div>
 								</form>
 							</div>
@@ -261,9 +277,8 @@
 			</div>
 
 			<!-- Formulario de registro de usuarios -->
-			<div class="center" style="width: 80%;">
-
-				<form method="post" action="dashboard/Controller/Process/register.jsp" id="FormVer">
+			<div class="center" style="width: 80%;" id="FormVer">
+				<form method="post" action="dashboard/Controller/Process/register.jsp">
 					<div class="mb-3">
 						<div class="grid text-center">
 							<div class="img-fluid"><img src="resources/IMG/securiTI.png"></div>
@@ -272,47 +287,45 @@
 					</div>
 					<div class="mb-3">
 						<label for="exampleInputEmail1" class="form-label">Nombre Completo</label>
-						<input autocomplete="off" required name="name" type="text" class="form-control" id=""
+						<input autocomplete="off" required name="name" type="text" class="form-control" id="namereg"
 							aria-describedby="emailHelp">
 					</div>
 					<div class="mb-3">
 						<label for="exampleInputEmail1" class="form-label">Nombre de Usuario</label>
 						<input autocomplete="off" required name="username" type="text" class="form-control"
-							id="" aria-describedby="emailHelp" maxlength="30">
+							id="inputSinEspacios" aria-describedby="emailHelp" maxlength="30">
 					</div>
 					<div class="mb-3">
 						<label for="exampleInputEmail1" class="form-label">Correo</label>
-						<input autocomplete="off" required name="email" type="email" class="form-control" id=""
+						<input autocomplete="off" required name="email" type="email" class="form-control" id="emailreg"
 							aria-describedby="emailHelp" maxlength="30">
 					</div>
 					<div class="mb-3">
 						<label for="exampleInputPassword1" class="form-label">Contraseña</label>
 						<input required required name="password" type="password" class="form-control"
-							id="exampleInputPassword1">
-					</div>
-					<div class="mb-3 form-check">
-						<input name="accept" type="checkbox" class="form-check-input" id="exampleCheck1">
-						Acepto Crear Cuenta
+							id="passwordreg">
 					</div>
 					<button type="submit" class="btn btn-primary">Crear cuenta</button>
 				</form>
-
 			</div>
 		</div>
 	</div>
 </div>
 
 
-
+</body>
 
 
 <script type="text/javascript">
+	document.getElementById("alertano").style.display = 'none';
+	document.getElementById("alertasi").style.display = 'none';
+
 	document.getElementById("FormVer").style.display = 'none';
-	document.getElementById("usua").style.display = 'none';
+	document.getElementById("usuarios").style.display = 'none';
 	document.getElementById("CuentaVer").style.display = 'block';
 
 	function VerForm() {
-		document.getElementById("usua").style.display = 'none';
+		document.getElementById("usuarios").style.display = 'none';
 		document.getElementById("CuentaVer").style.display = 'none';
 		document.getElementById("FormVer").style.display = 'block';
 	}
@@ -320,25 +333,48 @@
 	function verUsuario() {
 		document.getElementById("FormVer").style.display = 'none';
 		document.getElementById("CuentaVer").style.display = 'none';
-		document.getElementById("usua").style.display = 'block';
+		document.getElementById("usuarios").style.display = 'block';
 	}
 
 	function verCuenta() {
-		document.getElementById("usua").style.display = 'none';
+		document.getElementById("usuarios").style.display = 'none';
 		document.getElementById("FormVer").style.display = 'none';
 		document.getElementById("CuentaVer").style.display = 'block';
 	}
 
-	function inab() {
-		var contra1 = document.getElementById("newpass").value;
-		var contr2 = document.getElementById("newpass2").value;
-		var desb = document.getElementById("desb");
+	function igualdad() {
 
-		if (contra1 != contr2) {
-			desb.disabled = true;
-		} else {
-			desb.disabled = false;
-		}
+	var contra1 = document.getElementById("newpassword").value;
+	var contr2 = document.getElementById("newpassword2").value;
+
+
+	if (contra1 != contr2) {
+	window.alert("Las contraseñas no coinciden");
+	} else{
+	window.alert("Cambio Exitoso");
+	}
+
+	}
+
+	function inab() {
+    var contra1 = document.getElementById("newpassword").value;
+    var contr2 = document.getElementById("newpassword2").value;
+    var desb = document.getElementById("desb");
+
+    if (contra1 != contr2) {
+    desb.disabled = true;
+    document.getElementById("alertano").style.display = 'block';
+    document.getElementById("alertasi").style.display = 'none';
+   } else{
+    desb.disabled = false;
+    document.getElementById("alertano").style.display = 'none';
+    document.getElementById("alertasi").style.display = 'block';
+   }
+
+   if(contra1 && contr2 ==''){
+    document.getElementById("alertano").style.display = 'none';
+    document.getElementById("alertasi").style.display = 'none';
+   }
 
 	}
 

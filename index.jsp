@@ -25,7 +25,7 @@
 				</div>
 				<div class="mb-3">
 					<label for="exampleInputEmail1" class="form-label">Nombre del Usuario</label>
-					<input autocomplete="off" name="username" type="text" class="form-control" id="exampleInputEmail1"
+					<input required autocomplete="off" name="username" type="text" class="form-control" id="inputSinEspacios"
 						aria-describedby="emailHelp">
 				</div>
 				<div class="mb-3">
@@ -36,6 +36,7 @@
 					<input name="rememberme" type="checkbox" class="form-check-input" id="exampleCheck1">
 					<label class="form-check-label" for="exampleCheck1">Recordar Sesión</label>
 				</div>
+  					<p id="mensajeError" style="color: red;"></p>
 				<%
 					if(error!=null){
 						%>
@@ -63,6 +64,7 @@
 				<button type="submit" class="btn btn-primary">Iniciar Sesión</button>
 			</form>
 		</div>
+		<script src="resources/JS/scripts.jsp"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 			integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
 			crossorigin="anonymous"></script>

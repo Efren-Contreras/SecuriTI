@@ -12,7 +12,7 @@
             PreparedStatement ps = null;
             ResultSet rs = null;
             String query = "SELECT idUser, name, username, email, CAST(AES_DECRYPT(password, 'securiti') AS char) 'password', userlevel " + 
-            "FROM usuarios "+
+            "FROM users "+
             "WHERE username='"+username+"' AND password=AES_ENCRYPT('"+password+"', 'securiti')";
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();

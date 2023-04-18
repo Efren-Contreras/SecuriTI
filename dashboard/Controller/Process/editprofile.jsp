@@ -9,7 +9,7 @@
         String oldpassword = request.getParameter("oldpassword");
         String newpassword = request.getParameter("newpassword");
         String newpassword2 = request.getParameter("newpassword2");
-        String query = "UPDATE usuarios SET password=AES_ENCRYPT('"+newpassword+"', 'securiti') WHERE idUser="+idUser;
+        String query = "UPDATE users SET password=AES_ENCRYPT('"+newpassword+"', 'securiti') WHERE idUser="+idUser;
         if (oldpassword.equals(passw)){
             if (newpassword.equals(newpassword2)){
                 try {
@@ -35,7 +35,7 @@
     }
     else if (info.equals("name")) {
         String namenew = request.getParameter("name");
-        String query = "UPDATE usuarios SET name='"+namenew+"' WHERE idUser="+idUser;
+        String query = "UPDATE users SET name='"+namenew+"' WHERE idUser="+idUser;
         try {
             Statement st = null;
             st = conn.createStatement();
@@ -49,7 +49,7 @@
     }
     else if (info.equals("username")) {
         String unamenew = request.getParameter("username");
-        String query = "UPDATE usuarios SET username='"+unamenew+"' WHERE idUser="+idUser;
+        String query = "UPDATE users SET username='"+unamenew+"' WHERE idUser="+idUser;
         try {
             Statement st = null;
             st = conn.createStatement();
@@ -63,7 +63,7 @@
     }
     else if (info.equals("email")) {
         String emailnew = request.getParameter("email");
-        String query = "UPDATE usuarios SET email='"+emailnew+"' WHERE idUser="+idUser;
+        String query = "UPDATE users SET email='"+emailnew+"' WHERE idUser="+idUser;
         try {
             Statement st = null;
             st = conn.createStatement();

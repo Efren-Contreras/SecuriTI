@@ -38,7 +38,13 @@
 		<%@include file="dashboard/cuentas.jsp" %>
 		<%
 	}
+	else if (idpage.equals("dispositivos")){
+		%>
+		<%@include file="dashboard/dispositivo.jsp" %>
+		<%
+	}
 	%>
+	<script src="resources/JS/scripts.jsp"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
 		crossorigin="anonymous"></script>

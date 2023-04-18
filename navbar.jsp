@@ -28,15 +28,15 @@
                 if (userlevel.equals("root") || userlevel.equals("admin") ){
                     %>
                     <li class="nav-item">
-                        <a class="nav-link" href="?idpage=logs">LOGs</a>
+                        <a class="nav-link" href="?idpage=logs">Bitácora</a>
                     </li>
                     <%
                 }
                 %>
             </ul>
+            <form class="ms-auto" action="dashboard/Controller/Process/logout.jsp">
+                <button class="btn btn-outline-danger" type="submit">Cerrar Sesión</button>
+            </form>
         </div>
     </div>
-    <form class="container-fluid justify-content-end" action="dashboard/Controller/Process/logout.jsp">
-        <button class="btn btn-outline-danger" type="submit">Cerrar Sesión</button>
-    </form>
 </nav>
