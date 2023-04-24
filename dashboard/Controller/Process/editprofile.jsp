@@ -1,81 +1,66 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="java.net.URLEncoder" %>
 <%@ include file="../Connections/mysql.jsp" %>
 <%
-    //Conseguir Parámetros
     Object idUser = session.getAttribute("idUser");
-    Object passw = session.getAttribute("password");
+    Object password = session.getAttribute("password");
     String info = request.getParameter("formtype");
-    if (info.equals("password")){
-        String oldpassword = request.getParameter("oldpassword");
-        String newpassword = request.getParameter("newpassword");
-        String newpassword2 = request.getParameter("newpassword2");
-        String query = "UPDATE users SET password=AES_ENCRYPT('"+newpassword+"', 'securiti') WHERE idUser="+idUser;
-        if (oldpassword.equals(passw)){
-            if (newpassword.equals(newpassword2)){
-                try {
-                    Statement st = null;
-                    st = conn.createStatement();
-                    int i = st.executeUpdate(query);
-                    session.invalidate();
-                    response.sendRedirect("../../../index.jsp");
-                } catch (Exception e) {
-                    out.print(e);
-                    out.print("<br>"+query);
+    PreparedStatement statement = null;
+    if (info != null) {
+        String query = null;
+        boolean redirect = true;
+        switch (info) {
+            case "password":
+                String oldPassword = request.getParameter("oldpassword");
+                String newPassword = request.getParameter("newpassword");
+                String newPassword2 = request.getParameter("newpassword2");
+                if (oldPassword.equals(password) && newPassword.equals(newPassword2)) {
+                    query = "UPDATE users SET password=AES_ENCRYPT(?, 'securiti') WHERE idUser=?";
+                    statement = conn.prepareStatement(query);
+                    statement.setString(1, newPassword);
+                    statement.setObject(2, idUser);
+                } else {
+                    redirect = false;
                 }
+                break;
+            case "name":
+                String newName = request.getParameter("name");
+                query = "UPDATE users SET name=? WHERE idUser=?";
+                statement = conn.prepareStatement(query);
+                statement.setString(1, newName);
+                statement.setObject(2, idUser);
+                break;
+            case "username":
+                String newUsername = request.getParameter("username");
+                query = "UPDATE users SET username=? WHERE idUser=?";
+                statement = conn.prepareStatement(query);
+                statement.setString(1, newUsername);
+                statement.setObject(2, idUser);
+                break;
+            case "email":
+                String newEmail = request.getParameter("email");
+                query = "UPDATE users SET email=? WHERE idUser=?";
+                statement = conn.prepareStatement(query);
+                statement.setString(1, newEmail);
+                statement.setObject(2, idUser);
+                break;
+            default:
+                redirect = false;
+                break;
+        }
+        if (redirect && query != null) {
+            try {
+                int result = statement.executeUpdate();
+                session.invalidate();
+                response.sendRedirect("../../../index.jsp?error=" + URLEncoder.encode("Cerrado de Sesión Forzado por actualización de datos", "UTF-8"));
+            } catch (Exception e) {
+                out.print(e);
+                out.print("<br>" + query);
             }
-            else {
-                out.print("<br>Ambas contraseñas nuevas no coinciden, los cambios no se efectuaron.");
-                out.print("<br>Vuelva para Realizar nuevamente el proceso.");
-            }
+        } else {
+            response.sendRedirect("../../../index.jsp?error=" + URLEncoder.encode("Algo salió mal", "UTF-8"));
         }
-        else {
-            out.print("<br>La contraseña anterior no coincide con el valor proporcionado.");
-            out.print("<br>Vuelva para Realizar nuevamente el proceso.");
-        }
+    } else {
+        response.sendRedirect("../../../index.jsp?error=" + URLEncoder.encode("Algo salió mal", "UTF-8"));
     }
-    else if (info.equals("name")) {
-        String namenew = request.getParameter("name");
-        String query = "UPDATE users SET name='"+namenew+"' WHERE idUser="+idUser;
-        try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            session.invalidate();
-            response.sendRedirect("../../../index.jsp");
-        } catch (Exception e) {
-            out.print(e);
-            out.print("<br>"+query);
-        }
-    }
-    else if (info.equals("username")) {
-        String unamenew = request.getParameter("username");
-        String query = "UPDATE users SET username='"+unamenew+"' WHERE idUser="+idUser;
-        try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            session.invalidate();
-            response.sendRedirect("../../../index.jsp");
-        } catch (Exception e) {
-            out.print(e);
-            out.print("<br>"+query);
-        }
-    }
-    else if (info.equals("email")) {
-        String emailnew = request.getParameter("email");
-        String query = "UPDATE users SET email='"+emailnew+"' WHERE idUser="+idUser;
-        try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            session.invalidate();
-            response.sendRedirect("../../../index.jsp");
-        } catch (Exception e) {
-            out.print(e);
-            out.print("<br>"+query);
-        }
-    }
-    else
-        response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#failed");
-
 %>

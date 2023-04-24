@@ -5,17 +5,17 @@
     String username = request.getParameter("username");
     String password = request.getParameter("password");
     String remember = request.getParameter("rememberme");
-    //Validación y redireccionamiento
-    if (username!="null" && password!="null"){
-        //MySQL
+    if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) { 
+        // Agregamos validación para evitar valores nulos y vacíos
         try {
-            PreparedStatement ps = null;
-            ResultSet rs = null;
             String query = "SELECT idUser, name, username, email, CAST(AES_DECRYPT(password, 'securiti') AS char) 'password', userlevel " + 
-            "FROM users "+
-            "WHERE username='"+username+"' AND password=AES_ENCRYPT('"+password+"', 'securiti')";
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
+                "FROM users " +
+                "WHERE username=? AND password=AES_ENCRYPT(?, 'securiti')"; 
+            // Usamos '?' para los parámetros en la consulta para evitar inyecciones SQL
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 session.setAttribute("idUser", rs.getInt("idUser"));
                 session.setAttribute("username", rs.getString("username"));
@@ -23,23 +23,14 @@
                 session.setAttribute("email", rs.getString("email"));
                 session.setAttribute("userlevel", rs.getString("userlevel"));
                 session.setAttribute("password", password);
-                if (remember=="null"){
-                    session.setMaxInactiveInterval(600);
-                }
-                else {
-                    session.setMaxInactiveInterval(-1);
-                }
+                session.setMaxInactiveInterval(remember == null ? 600 : -1); 
+                // Simplificamos la condición para establecer el tiempo de expiración de la sesión
                 response.sendRedirect("../../../dashboard.jsp");
             }
             else {
-                /*
-                request.setAttribute("errorMsg", "Usuario o contraseña no encontrado");
-                RequestDispatcher rd = request.getRequestDispatcher("/");
-                rd.forward(request, response);
-                */
                 response.sendRedirect("../../../index.jsp?error=Usuario+o+contrase%C3%B1a+no+encontrado");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             out.print("<b>Error: </b>"+e+"<br>");
         }
     }

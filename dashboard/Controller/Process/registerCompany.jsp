@@ -8,27 +8,26 @@
     String telephone = request.getParameter("telephone");
     String email = request.getParameter("email");
     String address = request.getParameter("address");
-
-
     // Validación y redireccionamiento
     if (name!=null && contact!=null && telephone!=null && email!=null && address!=null) {
         // Completar el query con los valores faltantes
         String query = "INSERT INTO companies(name, contact, numertel, email, address) "+
-        "VALUES ('"+name+"', '"+contact+"', '"+telephone+"', '"+email+"', '"+address+"')";
-
+        "VALUES (?, ?, ?, ?, ?)";
         // Ejecutar consulta en MySQL
         try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, name);
+            pst.setString(2, contact);
+            pst.setString(3, telephone);
+            pst.setString(4, email);
+            pst.setString(5, address);
+            int i = pst.executeUpdate();
             response.sendRedirect("../../../dashboard.jsp");
         } catch (Exception e){
             out.print(e.getMessage());
             out.print("<br>Consulta: "+query);
         }
     } else {
-        String query = "INSERT INTO companies(name, contact, numertel, email, address)"+
-        "values ('"+name+"', '"+contact+"', '"+telephone+"', '"+email+"', '"+address+"')";
-        out.print("<br>Consulta: "+query);
+        response.sendRedirect("../../../dashboard.jsp");
     }
 %>

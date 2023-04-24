@@ -3,31 +3,71 @@
 <%@ page import="java.io.*, java.util.*" %>
 <%
     // Obtener parámetros
-    String name = request.getParameter("name");
-    String contact = request.getParameter("contact");
-    String telephone = request.getParameter("telephone");
-    String email = request.getParameter("email");
-    String address = request.getParameter("address");
+	Object username = session.getAttribute("username");
+    String deviceType = request.getParameter("deviceType");
+    String idCompany = request.getParameter("idCompany");
 
-    // Validación y redireccionamiento
-    if (name!=null && contact!=null && telephone!=null && email!=null && address!=null) {
-        // Completar el query con los valores faltantes
-        String query = "INSERT INTO companies(name, contact, numertel, email, address) "+
-        "VALUES ('"+name+"', '"+contact+"', '"+telephone+"', '"+email+"', '"+address+"')";
+    if (deviceType.equals("Workstation") || deviceType.equals("Server")){
+        String name = request.getParameter("name");
+        String manufacturer = request.getParameter("manufacturer");
+        String model = request.getParameter("model");
+        String serial = request.getParameter("serial");
+        String so = request.getParameter("so");
+        String macAddress = request.getParameter("macAddress");
+        String ram = request.getParameter("ram");
+        String storage = request.getParameter("storage");
+        String typeStorage = request.getParameter("typeStorage");
+        String observations = request.getParameter("observations");
+        String tableName = deviceType.equals("Workstation") ? "workstations" : "servers";
+        String assignedOfWorkStation = "";
+        String usedFor = "";
+        String query = "INSERT INTO "+tableName+" (idCompany, username, name, macAddress, storage, typeStorage, manufacturer, model, ram, serial, so, observations, dateReg";
 
-        // Ejecutar consulta en MySQL
+        if (deviceType.equals("Workstation")){
+            assignedOfWorkStation = request.getParameter("assignedOfWorkStation");
+            query += ", assignedOfWorkStation";
+        } else if (deviceType.equals("Server")){
+            usedFor = request.getParameter("usedFor");
+            query += ", usedFor";
+        }
+        query += ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
+        PreparedStatement st = null;
+        st = conn.prepareStatement(query);
+        st.setInt(1, Integer.parseInt(idCompany));
+        st.setObject(2, username);
+        st.setString(3, name);
+        st.setString(4, macAddress);
+        st.setString(5, storage);
+        st.setString(6, typeStorage);
+        st.setString(7, manufacturer);
+        st.setString(8, model);
+        st.setString(9, ram);
+        st.setString(10, serial);
+        st.setString(11, so);
+        st.setString(12, observations);
         try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            response.sendRedirect("../../../dashboard.jsp");
-        } catch (Exception e){
+            if (deviceType.equals("Workstation")){
+                st.setString(13, assignedOfWorkStation);
+                int i = st.executeUpdate();
+                response.sendRedirect("../../../dashboard.jsp?idCompany="+idCompany+"&idpage=dispositivos#workstation");
+            } else if (deviceType.equals("Server")){
+                st.setString(13, usedFor);
+                int i = st.executeUpdate();
+                response.sendRedirect("../../../dashboard.jsp?idCompany="+idCompany+"&idpage=dispositivos#server");
+            }
+        } catch (SQLException e){
             out.print(e.getMessage());
-            out.print("<br>Consulta: "+query);
+            out.print("<br>Consulta: "+st);
+        } finally {
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    out.print(e.getMessage());
+                }
+            }
         }
     } else {
-        String query = "INSERT INTO companies(name, contact, numertel, email, address)"+
-        "values ('"+name+"', '"+contact+"', '"+telephone+"', '"+email+"', '"+address+"')";
-        out.print("<br>Consulta: "+query);
+        response.sendRedirect("../../../dashboard.jsp");
     }
 %>

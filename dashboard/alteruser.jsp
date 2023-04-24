@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <a href="../../../dashboard.jsp?idpage=cuentas" class="btn btn-secondary">Volver</a>
+                <a href="../../../dashboard.jsp?idpage=cuentas#users" class="btn btn-secondary">Volver</a>
             </div>
             <%
                     }

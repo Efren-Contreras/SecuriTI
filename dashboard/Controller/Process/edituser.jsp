@@ -1,81 +1,63 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../Connections/mysql.jsp" %>
 <%
-    //Conseguir Parámetros
-    Object idUser = request.getParameter("idusuario");
+    // Obtener parámetros
+    String idUser = request.getParameter("idusuario");
     String info = request.getParameter("formtype");
-    if (info.equals("password")){
-        String newpassword = request.getParameter("newpassword");
-        String newpassword2 = request.getParameter("newpassword2");
-        String query = "UPDATE users SET password=AES_ENCRYPT('"+newpassword+"', 'securiti') WHERE idUser="+idUser;
-        if (newpassword.equals(newpassword2)){
-            try {
-                Statement st = null;
-                st = conn.createStatement();
-                int i = st.executeUpdate(query);
-                response.sendRedirect("../../../dashboard.jsp?idpage=cuentas");
-            } catch (Exception e) {
-                out.print(e);
-                out.print("<br>"+query);
-            }
-        }
-        else {
-            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas");
-        }
-    }
-    else if (info.equals("name")) {
-        String namenew = request.getParameter("name");
-        String query = "UPDATE users SET name='"+namenew+"' WHERE idUser="+idUser;
-        try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas");
-        } catch (Exception e) {
-            out.print(e);
-            out.print("<br>"+query);
-        }
-    }
-    else if (info.equals("username")) {
-        String unamenew = request.getParameter("username");
-        String query = "UPDATE users SET username='"+unamenew+"' WHERE idUser="+idUser;
-        try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas");
-        } catch (Exception e) {
-            out.print(e);
-            out.print("<br>"+query);
-        }
-    }
-    else if (info.equals("email")) {
-        String emailnew = request.getParameter("email");
-        String query = "UPDATE users SET email='"+emailnew+"' WHERE idUser="+idUser;
-        try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas");
-        } catch (Exception e) {
-            out.print(e);
-            out.print("<br>"+query);
-        }
-    }
-    else if (info.equals("userlevel")) {
-        String userlevelnew = request.getParameter("userlevel");
-        String query = "UPDATE users SET userlevel='"+userlevelnew+"' WHERE idUser="+idUser;
-        try {
-            Statement st = null;
-            st = conn.createStatement();
-            int i = st.executeUpdate(query);
-            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas");
-        } catch (Exception e) {
-            out.print(e);
-            out.print("<br>"+query);
-        }
-    }
-    else
-        response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#failed");
 
+    // Definir variables para los campos a actualizar
+    String field = "";
+    String newValue = "";
+
+    // Actualizar la información basándose en el tipo de información proporcionada
+    switch (info) {
+        case "password":
+            String newPassword = request.getParameter("newpassword");
+            String newPassword2 = request.getParameter("newpassword2");
+            if (newPassword.equals(newPassword2)) {
+                field = "password";
+                newValue = "AES_ENCRYPT(?, 'securiti')";
+            } else {
+                response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#users");
+            }
+            break;
+
+        case "name":
+            field = "name";
+            newValue = "?";
+            break;
+
+        case "username":
+            field = "username";
+            newValue = "?";
+            break;
+
+        case "email":
+            field = "email";
+            newValue = "?";
+            break;
+
+        case "userlevel":
+            field = "userlevel";
+            newValue = "?";
+            break;
+
+        default:
+            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#users");
+            break;
+    }
+
+    // Actualizar la base de datos
+    if (!field.isEmpty()) {
+        String query = "UPDATE users SET " + field + "=" + newValue + " WHERE idUser=?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, request.getParameter(field));
+            ps.setString(2, idUser);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            out.print(e);
+        }
+    }
+
+    response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#users");
 %>

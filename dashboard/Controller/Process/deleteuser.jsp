@@ -2,14 +2,14 @@
 <%@ include file="../Connections/mysql.jsp" %>
 <%
     String idalter = request.getParameter("iduser");
-    String query = "DELETE FROM users WHERE iduser = "+idalter;
+    String query = "DELETE FROM users WHERE iduser = ?";
     try {
-        Statement st = null;
-        st = conn.createStatement();
-        int i = st.executeUpdate(query);
-        response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#success");
-    } catch (Exception e) {
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1, Integer.parseInt(idalter));
+        int i = ps.executeUpdate();
+        response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#users");
+    } catch (SQLException e) {
         out.print(e);
-        out.print("<br>"+query);
+        out.print("<br>" + query);
     }
 %>
