@@ -6,6 +6,7 @@
 	Object username = session.getAttribute("username");
     String deviceType = request.getParameter("deviceType");
     String idCompany = request.getParameter("idCompany");
+    String nameCompany = request.getParameter("nameCompany");
 
     if (deviceType.equals("Workstation") || deviceType.equals("Server")){
         String name = request.getParameter("name");
@@ -49,11 +50,27 @@
             if (deviceType.equals("Workstation")){
                 st.setString(13, assignedOfWorkStation);
                 int i = st.executeUpdate();
-                response.sendRedirect("../../../dashboard.jsp?idCompany="+idCompany+"&idpage=dispositivos#workstation");
+
+                String user = (String)session.getAttribute("name");
+                String activity = "<b>Registró " + deviceType + "</b> con nombre " + name + " de la compañía " + nameCompany;
+                String logQuery = "INSERT INTO logs (userName, dateLog, action) VALUES (?, NOW(), ?)";
+                PreparedStatement psx = conn.prepareStatement(logQuery);
+                psx.setString(1, user);
+                psx.setString(2, activity);
+                psx.executeUpdate();
+                response.sendRedirect("../../../dashboard.jsp?idpage=dispositivos&nameCompany="+nameCompany+"&idCompany=" + idCompany + "#workstation");
             } else if (deviceType.equals("Server")){
                 st.setString(13, usedFor);
                 int i = st.executeUpdate();
-                response.sendRedirect("../../../dashboard.jsp?idCompany="+idCompany+"&idpage=dispositivos#server");
+
+                String user = (String)session.getAttribute("name");
+                String activity = "<b>Registró " + deviceType + "</b> con nombre " + name + " en la compañía " + nameCompany;
+                String logQuery = "INSERT INTO logs (userName, dateLog, action) VALUES (?, NOW(), ?)";
+                PreparedStatement psx = conn.prepareStatement(logQuery);
+                psx.setString(1, user);
+                psx.setString(2, activity);
+                psx.executeUpdate();
+                response.sendRedirect("../../../dashboard.jsp?idpage=dispositivos&nameCompany="+nameCompany+"&idCompany=" + idCompany + "#server");
             }
         } catch (SQLException e){
             out.print(e.getMessage());

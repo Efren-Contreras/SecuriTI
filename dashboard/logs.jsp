@@ -1,18 +1,36 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<div class="container-fuid">
+<%@ include file="Controller/Connections/mysql.jsp" %>
+<div class="container-fluid">
     <div class="table-responsive">
-        <table class="table mt-5">
-            <thead style="background-image: linear-gradient(to bottom, #5faaf2, #55afef, #4fb4ea, #4fb8e5, #53bbdf);">
-                <th>Fecha y Hora</th>
-                <th>Empresa</th>
-                <th>Modificado por</th>
-                <th>Observaciones</th>
+        <table class="table table-striped table-hover mt-5">
+            <thead class="bg-gradient" style="background-image: linear-gradient(to bottom, #5faaf2, #55afef, #4fb4ea, #4fb8e5, #53bbdf);">
+                <tr>
+                    <th>Fecha y Hora</th>
+                    <th>Usuario</th>
+                    <th>Realizó</th>
+                </tr>
             </thead>
             <tbody>
-                <td class="w-25">21-04-2023: 10:55:50 a.m</td>
-                <td class="w-25">Dio</td>
-                <td class="w-25">Sergio26</td>
-                <td class="w-25">Modifico</td>
+                <% 
+                String sql = "SELECT * FROM logs ORDER BY idLog DESC"; 
+                try { 
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        String dateLog = rs.getString("dateLog");
+                        String userName = rs.getString("userName");
+                        String action = rs.getString("action");
+                %>
+                <tr>
+                    <td class="col-1"><%= dateLog %></td>
+                    <td class="col-1"><%= userName %></td>
+                    <td><%= action %></td>
+                </tr>
+                <% } } catch (Exception e) { %>
+                <tr>
+                    <td><%=e.getMessage()%></td>
+                </tr>
+                <% } %>
             </tbody>
         </table>
     </div>

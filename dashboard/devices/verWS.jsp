@@ -63,13 +63,13 @@
 				<td><%=rs.getString("dateReg")%></td>
 			</tr>
 			<tr>
-				<td>Revisado por</td>
+				<td>Modificado por</td>
 				<% String nameuser = rs.getString("nameuser"); %>
 				<td><%= nameuser != null ? nameuser : "Usuario Eliminado o Inexistente" %></td>
 			</tr>
 			<tr>
 				<td>Observaciones</td>
-				<td></td>
+				<td><%=rs.getString("observations")%></td>
 			</tr>
 			<% } } catch (Exception e) { %>			
 			<tr style="background-image: linear-gradient(to left top, #5faaf2, #55afef, #4fb4ea, #4fb8e5, #53bbdf);">
@@ -83,10 +83,9 @@
 
 <div class="container-fluid my-4" id="Historico" style="display: none;">
 	<h1 class="text-center mb-4">Histórico del Dispositivo</h1>
-
 	<div class="table-responsive">
-		<table class="table table-bordered" style="border-color: black;">
-			<thead>
+		<table class="table table-bordered table-hover">
+			<thead style="background-image: linear-gradient(to left top, #5faaf2, #55afef, #4fb4ea, #4fb8e5, #53bbdf);">
 				<tr>
 					<th>Fecha de Modificación</th>
 					<th>Modificado Por</th>
@@ -102,30 +101,48 @@
 					<th>Observaciones</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody style="background: #B5C4C9;">
+			<%
+			try {
+				String query = "SELECT hw.*, COALESCE(u.name, 'Usuario Eliminado') AS NameUser FROM historyworkstations hw LEFT JOIN users u ON hw.username = u.username WHERE hw.idworkstations = ? ORDER BY hw.dateModify DESC";
+				PreparedStatement ps = conn.prepareStatement(query);
+				ps.setString(1, idDevice);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+			%>
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><%=rs.getString("dateModify")%></td>
+					<td><%=rs.getString("NameUser")%></td>
+					<td><%=rs.getString("assignedOfWorkStation")%></td>
+					<td><%=rs.getString("name")%></td>
+					<td><%=rs.getString("manufacturer")%></td>
+					<td><%=rs.getString("model")%></td>
+					<td><%=rs.getString("serial")%></td>
+					<td><%=rs.getString("so")%></td>
+					<td><%=rs.getString("macAddress")%></td>
+					<td><%=rs.getString("ram")%></td>
+					<td><%=rs.getString("storage")%></td>
+					<td><%=rs.getString("observations")%></td>
 				</tr>
+			<%
+				}
+			} catch (Exception e) {
+			%>
+				<tr>
+					<td>Error obteniendo los datos: <%=e.getMessage()%></td>
+				</tr>
+			<%
+			}
+			%>						
 			</tbody>
 		</table>
 	</div>
-
 </div>
+
 
 <div style="margin-left: 20%;" id="desb">
 	<a class="btn btn-primary" style="text-decoration: none; color: black;" 
-		href="../../../dashboard.jsp?idCompany=<%=idCompany%>&idpage=dispositivos#workstation">Volver</a>
+		href="../../../dashboard.jsp?idCompany=<%=idCompany%>&idpage=dispositivos&nameCompany=<%=nameCompany%>#workstation">Volver</a>
 	<button class="btn" style="color: black; background: #8EB6CB;" onclick="imprimir()">Imprimir</button>
 	<a class="btn btn-info" onclick="verCambios()">Ver Cambios</a>
 </div>

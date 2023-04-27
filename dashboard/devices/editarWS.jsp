@@ -94,7 +94,7 @@
 			</div>
 		</div>
 		<a type="button" class="btn btn-primary" style="width: 30%; margin-bottom: 3%;" 
-		href='../../../dashboard.jsp?idCompany=<%=idCompany%>&idpage=dispositivos&nameCompany=<%=nameCompany%>#server'>Volver</a>
+		href='../../../dashboard.jsp?idCompany=<%=idCompany%>&idpage=dispositivos&nameCompany=<%=nameCompany%>#workstation'>Volver</a>
 	</div>
 	<%
         }
@@ -306,7 +306,7 @@
 						<input type="hidden" id="idCompany" name="idCompany" value='<%=idCompany%>'>
 						<div class="mb-3">
 							<label for="" class="form-label">MAC Address</label>
-                            <input autocomplete="off" disabled required type="text" class="form-control" id="show" name="macAddress">
+                            <input autocomplete="off" disabled required type="text" class="form-control" id="show" name="macAddress" minlength="17">
 						</div>
                         <div class="form-check mb-3">
                           <input class="form-check-input" type="checkbox" id="agreeCheckbox">
@@ -439,7 +439,7 @@
 						<div class="mb-3">
 							<label for="" class="form-label">Observaciones</label>
 							<br>
-							<textarea disabled autocomplete="off" name="observations" id="show" cols="60" rows="5"></textarea>
+							<textarea disabled autocomplete="off" name="observations" id="show" cols="55" rows="5"></textarea>
 						</div>
 						<div class="form-check mb-3">
 							<input class="form-check-input" type="checkbox" id="agreeCheckbox">

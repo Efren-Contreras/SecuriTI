@@ -321,7 +321,7 @@
 						<input type="hidden" id="idCompany" name="idCompany" value='<%=idCompany%>'>
 						<div class="mb-3">
 							<label for="" class="form-label">MAC Address</label>
-							<input autocomplete="off" type="text" id="show" disabled  class="form-control" name="macAddress">
+							<input autocomplete="off" type="text" id="show" disabled  class="form-control" name="macAddress" minlength="16">
 						</div>
 						<div class="form-check mb-3">
 							<input class="form-check-input" type="checkbox" id="agreeCheckbox">
@@ -459,7 +459,7 @@
 						<div class="mb-3">
 							<label for="" class="form-label">Observaciones</label>
 							<br>
-							<textarea autocomplete="off" name="observations" id="show" disabled  cols="60" rows="5"></textarea>
+							<textarea autocomplete="off" name="observations" id="show" disabled  cols="55" rows="5"></textarea>
 						</div>
 						<div class="form-check mb-3">
 							<input class="form-check-input" type="checkbox" id="agreeCheckbox">

@@ -60,7 +60,15 @@
             ps.setString(2, session.getAttribute("username").toString());
             ps.setString(3, idDevice);
             int i = ps.executeUpdate();
-            response.sendRedirect("../../../dashboard.jsp?idpage=dispositivos&idCompany=" + idcomp + "#workstation");
+
+            String user = (String)session.getAttribute("name");
+            String activity = "<b>Editó " + deviceType + " ("+info+")</b> con ID " + idDevice + " de la compañía " + nameCompany;
+            String logQuery = "INSERT INTO logs (userName, dateLog, action) VALUES (?, NOW(), ?)";
+            PreparedStatement psx = conn.prepareStatement(logQuery);
+            psx.setString(1, user);
+            psx.setString(2, activity);
+            psx.executeUpdate();
+            response.sendRedirect("../../../dashboard.jsp?idpage=dispositivos&nameCompany="+nameCompany+"&idCompany=" + idcomp + "#workstation");
         } catch (Exception e) {
             out.print(e);
             out.print("<br>"+query);
@@ -114,8 +122,16 @@
             ps.setString(1, newValue);
             ps.setString(2, session.getAttribute("username").toString());
             ps.setString(3, idDevice);
-            int i = ps.executeUpdate();
-            response.sendRedirect("../../../dashboard.jsp?idpage=dispositivos&idCompany=" + idcomp + "#server");
+            int i = ps.executeUpdate();  
+
+            String user = (String)session.getAttribute("name");
+            String activity = "<b>Editó " + deviceType + " ("+info+")</b> con ID " + idDevice + " de la compañía " + nameCompany;
+            String logQuery = "INSERT INTO logs (userName, dateLog, action) VALUES (?, NOW(), ?)";
+            PreparedStatement psx = conn.prepareStatement(logQuery);
+            psx.setString(1, user);
+            psx.setString(2, activity);
+            psx.executeUpdate();
+            response.sendRedirect("../../../dashboard.jsp?idpage=dispositivos&nameCompany="+nameCompany+"&idCompany=" + idcomp + "#server");
         } catch (Exception e) {
             out.print(e);
             out.print("<br>"+query);

@@ -4,15 +4,15 @@
   String idCompany = request.getParameter("idCompany");
   String nameCompany = request.getParameter("nameCompany");
 %>
-<div class="container-fluid overflow-auto">
+<div class="container-fluid overflow-auto" id="barra">
   <div class="row flex-nowrap">
 		<!-- Panel Izquierdo -->
     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
       <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-        <span class="fs-5 d-none d-sm-inline"><%=nameCompany%></span>
+        <span class="fs-5 d-none d-sm-inline fs-3 text-uppercase"><%=nameCompany%></span>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
           <li class="nav-item">
-            <a href="#workstation" class="nav-link align-middle px-0">
+            <a href="#workstation" class="nav-link align-middle px-0 text-white">
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pc-display" viewBox="0 0 16 16">
                 <path d="M8 1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V1Zm1 13.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0Zm2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0ZM9.5 1a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5ZM9 3.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1h-5a.5.5 0 0 0-.5.5ZM1.5 2A1.5 1.5 0 0 0 0 3.5v7A1.5 1.5 0 0 0 1.5 12H6v2h-.5a.5.5 0 0 0 0 1H7v-4H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5H7V2H1.5Z" />
               </svg>
@@ -20,7 +20,7 @@
             </a>
           </li>
           <li>
-            <a href="#server" class="nav-link px-0 align-middle">
+            <a href="#server" class="nav-link px-0 align-middle text-white">
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-server" viewBox="0 0 16 16">
                 <path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4V2.667z" />
                 <path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334a6.51 6.51 0 0 1-1.458.79C11.81 7.684 9.967 8 8 8c-1.966 0-3.809-.317-5.208-.876a6.508 6.508 0 0 1-1.458-.79z" />
@@ -47,41 +47,26 @@
                   <input type="text" class="form-control" placeholder="Nombre del equipo" id="filName">
                 </div>
                 <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="Responsable">
+                  <input type="text" class="form-control" placeholder="Responsable" id="filName1">
                 </div>
                 <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="Fabricante">
+                  <input type="text" class="form-control" placeholder="Fabricante" id="filName2">
                 </div>
                 <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="S. O.">
+                  <input type="text" class="form-control" placeholder="Modelo" id="filName3">
                 </div>
-                <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="RAM">
-                  <span class="input-group-text">GB</span>
-                </div>
-                <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="Alm.">
-                  <span class="input-group-text">GB</span>
-                </div>
-                <div class="input-group me-2">
-                  <select class="form-select">
-                    <option value="" disabled selected>Tipo de Alm.</option>
-                    <option value="SSD">SSD</option>
-                    <option value="HDD">HDD</option>
-                  </select>
-                </div>
-                <button class="btn btn-outline-secondary" type="button">Filtrar</button>
               </div>
             </div>
           </div>
         </nav>
         <!--Tabla de dispositivos-->
-        <div class="container-fluid" id="tabla">
+        <div class="container-fluid" id="tdisp">
           <h1>WorkStation Registrados</h1>
           <div class="table-responsive" style="margin-top: 2%; text-align: center;">
-            <table class="table">
+            <table class="table" id="tabla">
               <thead style="background-color: #3C99D2; color: white;">
                 <tr>
+                  <th class="d-none d-sm-table-cell" scope="col">Dispositivo</th>
                   <th class="col" scope="col">Nombre</th>
                   <th class="d-none d-sm-table-cell" scope="col">Responsable</th>
                   <th class="d-none d-sm-table-cell" scope="col">Fabricante</th>
@@ -94,7 +79,7 @@
                   <th class="col-3" scope="col">Acciones</th>
                 </tr>
               </thead>
-              <tbody style="background: #B5C4C9;" id="busquedaWs">        
+              <tbody class="fw-bold" style="background: #B5C4C9;" id="busquedaWs">        
                 <% 
                 String sql = "SELECT * FROM workstations WHERE idCompany = ? ORDER BY dateReg"; 
                 try { 
@@ -108,6 +93,7 @@
                       counter++;
                 %>
                 <tr>
+                  <td class="d-none d-sm-table-cell"><b><%=counter%></b></td>
                   <td class="col" scope="col"><b><%=rs.getString("name")%></b></td>
                   <td class="d-none d-sm-table-cell"><%=rs.getString("assignedOfWorkStation")%></td>
                   <td class="d-none d-sm-table-cell"><%=rs.getString("manufacturer")%></td>
@@ -178,45 +164,30 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
               <div class="d-flex align-items-center">
                 <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="Nombre del equipo">
+                  <input type="text" class="form-control" placeholder="Nombre del equipo" id="filName12">
                 </div>
                 <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="Tipo de Uso">
+                  <input type="text" class="form-control" placeholder="Tipo de Uso" id="filName11">
                 </div>
                 <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="Fabricante">
+                  <input type="text" class="form-control" placeholder="Fabricante" id="filName22">
                 </div>
                 <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="S. O.">
+                  <input type="text" class="form-control" placeholder="Modelo" id="filName32">
                 </div>
-                <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="RAM">
-                  <span class="input-group-text">GB</span>
-                </div>
-                <div class="input-group me-2">
-                  <input type="text" class="form-control" placeholder="Alm.">
-                  <span class="input-group-text">GB</span>
-                </div>
-                <div class="input-group me-2">
-                  <select class="form-select">
-                    <option value="" disabled selected>Tipo de Alm.</option>
-                    <option value="ssd">SSD</option>
-                    <option value="hdd">HDD</option>
-                  </select>
-                </div>
-                <button class="btn btn-outline-secondary" type="button">Filtrar</button>
               </div>
             </div>
           </div>
         </nav>
         <!--Tabla de Servidores-->
         <div id="Servidores">
-          <div class="container-fluid" id="tabla">
+          <div class="container-fluid">
             <h1>Servidores Registrados</h1>
             <div class="table-responsive" style="margin-top: 2%; text-align: center;">
-              <table class="table">
+              <table class="table" id="tabla2">
                 <thead style="background-color: #3C99D2; color: white;">
                   <tr>
+                    <th class="d-none d-sm-table-cell" scope="col">Dispositivo</th>
                     <th class="col-sm" scope="col" scope="col">Nombre</th>
                     <th class="d-none d-sm-table-cell" scope="col">Tipo de uso</th>
                     <th class="d-none d-sm-table-cell" scope="col">Fabricante</th>
@@ -229,7 +200,7 @@
                     <th class="col-3" scope="col" scope="col" style="width: 1%;">Acciones</th>
                   </tr>
                 </thead>
-                <tbody style="background: #B5C4C9;">                
+                <tbody class="fw-bold" style="background: #B5C4C9;">                
                   <% 
                   sql = "SELECT * FROM servers WHERE idCompany = "+idCompany+" ORDER BY dateReg"; 
                   try { 
@@ -242,6 +213,7 @@
                           counter++;
                   %>
                   <tr>
+                    <td class="d-none d-sm-table-cell"><b><%=counter%></b></td>
                     <td class="col-sm" scope="col"><b><%=rs.getString("name")%></b></td>
                     <td class="d-none d-sm-table-cell"><%=rs.getString("usedFor")%></td>
                     <td class="d-none d-sm-table-cell"><%=rs.getString("manufacturer")%></td>
@@ -303,6 +275,7 @@
         </div>
       </div>
 
+<% if (userlevel.equals("root") || userlevel.equals("admin") ){ %>
       <div id="workstation" class="position-fixed bottom-0 end-0">
         <button class="btn" data-bs-toggle="modal" data-bs-target="#agregarWS" style="border-radius: 50px;" id="botonDisp">
           <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -319,6 +292,7 @@
           </svg>
         </button>
       </div>
+<% } %>	
 
       <!-- Modal Agregar WorkStation-->
       <div class="modal fade" id="agregarWS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -331,6 +305,7 @@
             <div class="modal-body">
               <form method="post" action="dashboard/Controller/Process/registerDevice.jsp?deviceType=Workstation">
                 <input name="idCompany" type="hidden" value='<%=idCompany%>'>
+                <input name="nameCompany" type="hidden" value='<%=nameCompany%>'>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="mb-3">
@@ -357,11 +332,11 @@
                   <div class="col-md-6">
                     <div class="mb-3">
                       <label for="serial" class="form-label">Serial</label>
-                      <input type="text" class="form-control" id="serial" name="serial" minlength="17" maxlength="17" required>
+                      <input type="text" class="form-control" id="serial" name="serial" required>
                     </div>
                     <div class="mb-3">
                       <label for="macAddress" class="form-label">Mac Address</label>
-                      <input type="text" class="form-control" id="macAddress" name="macAddress" placeholder="00:1e:c2:9e:28:6b" minlength="17" maxlength="17" required>
+                      <input type="text" class="form-control" id="macAddress" name="macAddress" placeholder="00:1e:c2:9e:28:6b" minlength="17"  required>
                     </div>
                     <div class="mb-3">
                       <label for="ram" class="form-label">Memoria RAM</label>
@@ -408,7 +383,8 @@
             </div>
             <div class="modal-body">
               <form style="color: black;" action="dashboard/Controller/Process/registerDevice.jsp?deviceType=Server" method="post">
-                <input name="idCompany" type="hidden" value='<%=idCompany%>' required>
+                <input name="idCompany" type="hidden" value='<%=idCompany%>'>
+                <input name="nameCompany" type="hidden" value='<%=nameCompany%>'>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="mb-3">
@@ -429,7 +405,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="serial" class="form-label">Serial</label>
-                      <input type="text" class="form-control" id="serial" name="serial" minlength="12" maxlength="12" required>
+                      <input type="text" class="form-control" id="serial" name="serial" required>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -439,7 +415,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="mac-address" class="form-label">Mac Address</label>
-                      <input type="text" class="form-control" id="mac-address"  name="macAddress" placeholder="00:1e:c2:9e:28:6b" minlength="17" maxlength="17" required>
+                      <input type="text" class="form-control" id="mac-address"  name="macAddress" placeholder="00:1e:c2:9e:28:6b" minlength="17"  required>
                     </div>
                     <div class="mb-3">
                       <label for="ram" class="form-label">Memoria RAM</label>
@@ -489,7 +465,6 @@
 <script>
   // Obtener la ID de la URL
   const urlHash = window.location.hash.substring(1);
-
   // Ocultar todos los divs excepto los especificados
   const divsToHide = ["workstation", "server", "register"];
   const allDivs = document.querySelectorAll("div");
@@ -503,7 +478,6 @@
       }
     }
   }
-
   // Agregar evento click a los enlaces con href que comiencen con #
   const links = document.querySelectorAll('a[href^="#"]');
   links.forEach(function(link) {

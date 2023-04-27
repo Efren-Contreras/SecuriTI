@@ -96,7 +96,7 @@
                           <input type="hidden" class="form-control" id="idCompany" name="idCompany" value='<%=idCompany%>'>
                           <div class="mb-3">
                               <label for="" class="form-label">Nombre de la empresa</label>
-                              <input disabled required type="text" class="form-control" id="show" name="name">
+                              <input disabled required  autocomplete="off" type="text" class="form-control" id="show" name="name">
                           </div>
                           <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="agreeCheckbox">
@@ -128,7 +128,7 @@
                           <input type="hidden" class="form-control" id="idCompany" name="idCompany" value='<%=idCompany%>'>
                           <div class="mb-3">
                               <label for="" class="form-label">Contacto</label>
-                              <input disabled required type="text" class="form-control" id="show" name="contact">
+                              <input disabled required  autocomplete="off" type="text" class="form-control" id="show" name="contact">
                           </div>
                           <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="agreeCheckbox">
@@ -160,7 +160,7 @@
                           <input type="hidden" class="form-control" id="idCompany" name="idCompany" value='<%=idCompany%>'>
                           <div class="mb-3">
                               <label for="" class="form-label">Teléfono</label>
-                              <input disabled required type="text" class="form-control" id="show" name="tel">
+                              <input disabled required  autocomplete="off" type="text" class="form-control" id="show" name="tel">
                           </div>
                           <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="agreeCheckbox">
@@ -191,7 +191,7 @@
                           <input type="hidden" class="form-control" id="idCompany" name="idCompany" value='<%=idCompany%>'>
                           <div class="mb-3">
                               <label for="" class="form-label">Correo</label>
-                              <input disabled required type="email" class="form-control" id="show" name="email">
+                              <input disabled required  autocomplete="off" type="email" class="form-control" id="show" name="email">
                           </div>
                           <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="agreeCheckbox">
@@ -222,7 +222,7 @@
                           <input type="hidden" class="form-control" id="idCompany" name="idCompany" value='<%=idCompany%>'>
                           <div class="mb-3">
                               <label for="" class="form-label">Direccion</label>
-                              <input disabled required type="text" class="form-control" id="show" name="address">
+                              <input disabled required  autocomplete="off" type="text" class="form-control" id="show" name="address">
                           </div>
                           <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="agreeCheckbox">

@@ -17,9 +17,9 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="background-image: linear-gradient(to bottom, #5faaf2, #55afef, #4fb4ea, #4fb8e5, #53bbdf);">
     <div class="container-fluid">
-        <div class="card" style="padding-left: 10%; padding-right: 10%; width: 55%; margin-left: 25%; margin-top: 2%;">
+        <div class="card" style="padding-left: 10%; padding-right: 10%; width: 55%; margin-left: 25%; margin-top: 2%; background-image: linear-gradient(to right bottom, #5faaf2, #6db3e7, #82badb, #9bc0d1, #b5c4c9);">
             <div class="mx-auto">
                 <img src="../resources/IMG/securiTI.png">
             </div>
@@ -102,10 +102,10 @@
                     <div class="modal-body">
                         <!-- Formulario -->
                         <form action="Controller/Process/edituser.jsp?formtype=name" method="post">
-                            <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
+                            <input type="hidden"  class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre Nuevo</label>
-                                <input required type="text" class="form-control" id="name" name="name">
+                                <input required  autocomplete="off" type="text" class="form-control" id="name" name="name">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -133,7 +133,7 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="" class="form-label">Username Nuevo</label>
-                                <input required type="text" class="form-control" id="username" name="username">
+                                <input required  autocomplete="off" type="text" class="form-control" id="username" name="username">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -162,7 +162,7 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="" class="form-label">Correo Nuevo</label>
-                                <input required type="email" class="form-control" id="inputEmail" name="email">
+                                <input required autocomplete="off" type="email" class="form-control" id="inputEmail" name="email">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary" id="btnEnviar">Enviar</button>
@@ -190,11 +190,11 @@
                             <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<%=idusuario%>">
                             <div class="mb-3">
                                 <label for="" class="form-label">Contraseña Nueva</label>
-                                <input required type="password" class="form-control" id="newpassword" name="newpassword">
+                                <input required autocomplete="off" type="password" class="form-control" id="newpassword" name="newpassword">
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Repita Contraseña</label>
-                                <input required type="password" class="form-control" id="newpassword2" name="newpassword2" onkeyup="inab()">
+                                <input required autocomplete="off" type="password" class="form-control" id="newpassword2" name="newpassword2" onkeyup="inab()">
                             </div>
                             <div class="alert alert-danger" role="alert" id="alertano">
                                 Las contraseñas no coinciden

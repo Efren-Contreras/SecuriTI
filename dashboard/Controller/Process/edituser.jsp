@@ -8,20 +8,20 @@
     // Definir variables para los campos a actualizar
     String field = "";
     String newValue = "";
+    String newPassword = "";
 
     // Actualizar la información basándose en el tipo de información proporcionada
     switch (info) {
         case "password":
-            String newPassword = request.getParameter("newpassword");
+            newPassword = request.getParameter("newpassword");
             String newPassword2 = request.getParameter("newpassword2");
             if (newPassword.equals(newPassword2)) {
                 field = "password";
                 newValue = "AES_ENCRYPT(?, 'securiti')";
             } else {
-                response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#users");
+                response.sendRedirect("../../../dashboard.jsp?idpage=cuentas&errorMsg=Pass#users");
             }
             break;
-
         case "name":
             field = "name";
             newValue = "?";
@@ -51,11 +51,29 @@
     if (!field.isEmpty()) {
         String query = "UPDATE users SET " + field + "=" + newValue + " WHERE idUser=?";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, request.getParameter(field));
+            if (field.equals("password")) {
+                ps.setString(1, newPassword);
+            } else {
+                ps.setString(1, request.getParameter(field));
+            }
             ps.setString(2, idUser);
             ps.executeUpdate();
+            
+            // Agregar registro en la tabla logs
+            String name = (String) session.getAttribute("name");
+            String action = "<b>Actualizó</b> la información de usuario: <b>" + name + "</b> cambió <b>" + field + "</b> del usuario con ID: " + idUser;
+            String queryLogs = "INSERT INTO logs(userName, dateLog, action) VALUES (?, NOW(), ?)";
+            try {
+                PreparedStatement pstLogs = conn.prepareStatement(queryLogs);
+                pstLogs.setString(1, name);
+                pstLogs.setString(2, action);
+                int j = pstLogs.executeUpdate();
+            } catch (Exception e) {
+                out.print(e);
+                out.print("<br>" + queryLogs);
+            }
         } catch (Exception e) {
-            out.print(e);
+            out.print(e.getMessage());
         }
     }
 

@@ -7,6 +7,7 @@
     String idDevice = request.getParameter("idDevice");
     String idCompany = request.getParameter("idCompany");
     String deviceType = request.getParameter("deviceType");
+    String nameCompany = request.getParameter("nameCompany");
 %>
 <!DOCTYPE html>
 <html lang="es">

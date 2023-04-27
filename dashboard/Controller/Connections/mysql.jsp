@@ -3,7 +3,7 @@
 <%
     /*connetion sera nuestra conexion a la bd*/
     Connection conn = null;
- 
+
     /*parametros para la conexion*/
     String driver = "com.mysql.jdbc.Driver";
     String url = "jdbc:mysql://localhost:3306/securiti1_sistema";

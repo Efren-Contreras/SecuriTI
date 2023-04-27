@@ -20,10 +20,24 @@
             ps.setString(3, email);
             ps.setString(4, password);
             int i = ps.executeUpdate();
-            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#users");
+            // Agregar registro en la tabla logs
+            Object nameSession = session.getAttribute("name");
+            String action = "<b>Registró</b> un nuevo usuario: " + name + " (" + username + ")";
+            String queryLogs = "INSERT INTO logs(userName, dateLog, action) VALUES (?, NOW(), ?)";
+            try {
+                PreparedStatement pstLogs = conn.prepareStatement(queryLogs);
+                pstLogs.setString(1, (String)nameSession);
+                pstLogs.setString(2, action);
+                int j = pstLogs.executeUpdate();
+                response.sendRedirect("../../../dashboard.jsp?idpage=cuentas#users");
+            } catch (Exception e) {
+                out.print(e);
+                out.print("<br>" + queryLogs);
+            }
         } catch (SQLException e) {
             out.print(e.getMessage());
             out.print("<br>Consulta: " + query);
+            response.sendRedirect("../../../dashboard.jsp?idpage=cuentas&error=Username+o+Correo+Repetido#register");
         }
     }
     else {

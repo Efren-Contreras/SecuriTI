@@ -63,13 +63,13 @@
 				<td><%=rs.getString("dateReg")%></td>
 			</tr>
 			<tr>
-				<td>Revisado por</td>
+				<td>Modificado por</td>
 				<% String nameuser = rs.getString("nameuser"); %>
 				<td><%= nameuser != null ? nameuser : "Usuario Eliminado o Inexistente" %></td>
 			</tr>
 			<tr>
 				<td>Observaciones</td>
-				<td></td>
+				<td><%=rs.getString("observations")%></td>
 			</tr>
 			<% } } catch (Exception e) { %>			
 			<tr style="background-image: linear-gradient(to left top, #5faaf2, #55afef, #4fb4ea, #4fb8e5, #53bbdf);">
@@ -91,6 +91,7 @@
 					<th>Fecha de Modificación</th>
 					<th>Modificado Por</th>
 					<th>Tipo de Uso</th>
+					<th>Nombre</th>
 					<th>Fabricante</th>
 					<th>Modelo</th>
 					<th>Serial</th>
@@ -102,18 +103,38 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				<%
+				try {
+					String query = "SELECT hs.*, COALESCE(u.name, 'Usuario Eliminado') AS NameUser FROM historyservers hs LEFT JOIN users u ON hs.username = u.username WHERE hs.idserver = ? ORDER BY hs.dateModify DESC";
+					PreparedStatement ps = conn.prepareStatement(query);
+					ps.setString(1, idDevice);
+					ResultSet rs = ps.executeQuery();
+					while (rs.next()) {
+				%>
+					<tr>
+						<td><%=rs.getString("dateModify")%></td>
+						<td><%=rs.getString("NameUser")%></td>
+						<td><%=rs.getString("usedFor")%></td>
+						<td><%=rs.getString("name")%></td>
+						<td><%=rs.getString("manufacturer")%></td>
+						<td><%=rs.getString("model")%></td>
+						<td><%=rs.getString("serial")%></td>
+						<td><%=rs.getString("so")%></td>
+						<td><%=rs.getString("macAddress")%></td>
+						<td><%=rs.getString("ram")%></td>
+						<td><%=rs.getString("storage")%></td>
+						<td><%=rs.getString("observations")%></td>
+					</tr>
+				<%
+					}
+				} catch (Exception e) {
+				%>
+					<tr>
+						<td>Error obteniendo los datos: <%=e.getMessage()%></td>
+					</tr>
+				<%
+				}
+				%>	
 				</tr>
 			</tbody>
 		</table>
@@ -123,7 +144,7 @@
 
 <div style="margin-left: 20%;" id="desb">
 	<a class="btn btn-primary" style="text-decoration: none; color: black;" 
-		href="../../../dashboard.jsp?idCompany=<%=idCompany%>&idpage=dispositivos#server">Volver</a>
+		href="../../../dashboard.jsp?idCompany=<%=idCompany%>&idpage=dispositivos&nameCompany=<%=nameCompany%>#server">Volver</a>
 	<button class="btn" style="color: black; background: #8EB6CB;" onclick="imprimir()">Imprimir</button>
 	<button class="btn btn-info" onclick="verCambios()">Ver Cambios</button>
 </div>

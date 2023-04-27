@@ -12,7 +12,7 @@
                 <th class="col-6" scope="col">Acciones</th>
             </tr>
         </thead>
-        <tbody style="background: #B5C4C9;">
+        <tbody class="fw-bold" style="background: #B5C4C9;">
             <% 
             String sql = "SELECT * FROM companies ORDER BY name ASC"; 
             try { 
@@ -110,16 +110,16 @@
                     <form method="post" action="dashboard/Controller/Process/registerCompany.jsp">
                         <div class="mb-3">
                             <label for="name" class="form-label">Empresa</label>
-                            <input required type="text" class="form-control" id="name" name="name" autocomplete="off">
+                            <input required autocomplete="off" type="text" class="form-control" id="name" name="name" autocomplete="off">
                         </div>
                         <div class="mb-3">
                             <label for="contact" class="form-label">Contacto (Persona a Contactar)</label>
-                            <input required type="text" class="form-control" id="contact" name="contact" autocomplete="off">
+                            <input required autocomplete="off" type="text" class="form-control" id="contact" name="contact" autocomplete="off">
                         </div>
                         <div class="mb-3">
                             <label for="telephone" class="form-label">Telefono</label>
                             <!-- Validar Teléfono pendiente -->
-                            <input required type="tel" class="form-control" id="telephone" 
+                            <input required autocomplete="off" type="tel" class="form-control" id="telephone" 
                                 name="telephone" minlength="10" maxlength="10" pattern="[0-9]{10}" autocomplete="off">
                         </div>
                         <div class="mb-3">
@@ -128,7 +128,7 @@
                         </div>  
                         <div class="mb-3">
                             <label for="address" class="form-label">Dirección</label>
-                            <input required type="text" class="form-control" id="address" name="address" autocomplete="off">
+                            <input required autocomplete="off" type="text" class="form-control" id="address" name="address" autocomplete="off">
                         </div>
                         <div class="modal-footer" style="background-image: linear-gradient(to bottom, #5faaf2, #55afef, #4fb4ea, #4fb8e5, #53bbdf);">
                             <button type="submit" class="btn btn-primary">Agregar Empresa</button>

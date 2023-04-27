@@ -51,8 +51,21 @@
         if (redirect && query != null) {
             try {
                 int result = statement.executeUpdate();
-                session.invalidate();
-                response.sendRedirect("../../../index.jsp?error=" + URLEncoder.encode("Cerrado de Sesión Forzado por actualización de datos", "UTF-8"));
+                // Agregar registro en la tabla logs
+                Object nameSession = session.getAttribute("name");
+                String action = "<b>Actualizó</b> su información de usuario";
+                String queryLogs = "INSERT INTO logs(userName, dateLog, action) VALUES (?, NOW(), ?)";
+                try {
+                    PreparedStatement pstLogs = conn.prepareStatement(queryLogs);
+                    pstLogs.setString(1, (String)nameSession);
+                    pstLogs.setString(2, action);
+                    int j = pstLogs.executeUpdate();
+                    session.invalidate();
+                    response.sendRedirect("../../../index.jsp?error=" + URLEncoder.encode("Cerrado de Sesión Forzado por actualización de datos", "UTF-8"));
+                } catch (Exception e) {
+                    out.print(e);
+                    out.print("<br>" + queryLogs);
+                }
             } catch (Exception e) {
                 out.print(e);
                 out.print("<br>" + query);

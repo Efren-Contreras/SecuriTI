@@ -8,6 +8,8 @@
     String telephone = request.getParameter("telephone");
     String email = request.getParameter("email");
     String address = request.getParameter("address");
+    // Obtener el usuario de la sesión
+    String userName = (String) session.getAttribute("name");
     // Validación y redireccionamiento
     if (name!=null && contact!=null && telephone!=null && email!=null && address!=null) {
         // Completar el query con los valores faltantes
@@ -22,6 +24,12 @@
             pst.setString(4, email);
             pst.setString(5, address);
             int i = pst.executeUpdate();
+            // Agregar actividad en la tabla logs
+            String logQuery = "INSERT INTO logs(userName, dateLog, action) VALUES (?, NOW(), ?)";
+            PreparedStatement logPst = conn.prepareStatement(logQuery);
+            logPst.setString(1, userName);
+            logPst.setString(2, "<b>Registró</b> una nueva empresa: " + name);
+            logPst.executeUpdate();
             response.sendRedirect("../../../dashboard.jsp");
         } catch (Exception e){
             out.print(e.getMessage());

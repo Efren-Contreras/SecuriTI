@@ -2,6 +2,7 @@
 <%@ include file="../Connections/mysql.jsp" %>
 <%
     //Conseguir Parámetros
+    String nameCompany = request.getParameter("nameCompany");
     String idCompany = request.getParameter("idCompany");
     String info = request.getParameter("formtype");
     // Definir variable para almacenar la nueva información
@@ -45,7 +46,21 @@
         ps.setString(1, newInfo);
         ps.setString(2, idCompany);
         int i = ps.executeUpdate();
-        response.sendRedirect("../../../dashboard.jsp");
+
+        // Agregar registro en la tabla logs
+        Object name = session.getAttribute("name");
+        String action = "<b>Actualizó</b> información de la <b>compañía</b> " + nameCompany + ": " + info + " cambiado a " + newInfo;
+        String queryLogs = "INSERT INTO logs(userName, dateLog, action) VALUES (?, NOW(), ?)";
+        try {
+            PreparedStatement pstLogs = conn.prepareStatement(queryLogs);
+            pstLogs.setString(1, (String)name);
+            pstLogs.setString(2, action);
+            int j = pstLogs.executeUpdate();
+            response.sendRedirect("../../../dashboard.jsp");
+        } catch (Exception e) {
+            out.print(e);
+            out.print("<br>"+queryLogs);
+        }
     } catch (Exception e) {
         out.print(e);
         out.print("<br>"+query);
